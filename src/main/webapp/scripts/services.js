@@ -206,6 +206,21 @@ awardsApp.factory('VoteService', ['$http', function ($http) {
 
 }]);
 
+awardsApp.factory('LostPasswordService', function ($rootScope, $http, $location, Base64Service) {
+    return {
+        reset: function(email) {
+            $http.get('app/rest/reset-password?mail='+email)
+            .success(function (data, status, headers, config) {
+                    $rootScope.authenticationError = false;
+                    $rootScope.passwordReseted = true;
+                    $location.path('/login');
+            });
+            
+        }
+    }
+});
+
+
 awardsApp.factory('AuthenticationSharedService', function ($rootScope, $http, authService, Session, Account, Base64Service, AccessToken) {
         return {
             login: function (param) {
